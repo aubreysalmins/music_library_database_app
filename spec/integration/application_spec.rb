@@ -26,4 +26,27 @@ describe Application do
       expect(response.body).to include('Voyage')
     end
   end
+
+  context "GET /artists" do
+    it 'should return a list of artists' do
+
+      response = get('/artists')
+      expect(response.body).to eq('Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos')
+    end
+  end
+
+  context "POST /artists" do
+    it "creates a new artist" do
+
+      response = post('/artists',name:'Wild nothing',genre:'Indie')
+      repo = ArtistRepository.new
+      artist = Artist.new
+
+      expect(response.status).to eq(200)
+      expect(response.body).to eq('')
+
+      response = get('/artists')
+      expect(response.body).to eq('Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos, Wild nothing')
+    end
+  end
 end

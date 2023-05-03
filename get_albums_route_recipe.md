@@ -53,7 +53,7 @@ describe Application do
 
   context "POST /albums" do
     it 'returns 200 OK' do
-      response = get('/posts?title=Voyage&release_year=2022&artist_id=2')
+      response = post('/posts?title=Voyage&release_year=2022&artist_id=2')
       repo = AlbumRepository.new
       album = Album.new
       album.title = params[:title]
