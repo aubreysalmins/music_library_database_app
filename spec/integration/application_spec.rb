@@ -2,7 +2,16 @@ require "spec_helper"
 require "rack/test"
 require_relative '../../app'
 
+def reset_albums_table
+  seed_sql = File.read('spec/seeds/albums_seeds.sql')
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'music_library_test' })
+  connection.exec(seed_sql)
+end
+
 describe Application do
+  before(:each) do 
+    reset_albums_table
+  end
   # This is so we can use rack-test helper methods.
   include Rack::Test::Methods
 
@@ -47,6 +56,25 @@ describe Application do
 
       response = get('/artists')
       expect(response.body).to eq('Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos, Wild nothing')
+    end
+  end
+
+  context "GET /albums/:id" do
+    it "returns the first albums information" do
+      response = get('/albums/1')
+      
+      expect(response.status).to eq(200)
+      expect(response.body).to include('Doolittle', 'Release year: 1989', 'Artist: Pixies')
+    end
+  end
+
+  context "GET /albums" do
+    it "returns a list of albums as an HTML page" do
+      response = get('/albums')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<div> Title: Surfer Rosa Released: 1988 </div>')
+      expect(response.body).to include('<div> Title: Ring Ring Released: 1973 </div>')
     end
   end
 end
