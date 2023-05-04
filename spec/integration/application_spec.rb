@@ -77,16 +77,6 @@ describe Application do
     end
   end
 
-  # context "GET /albums" do
-  #   it "returns a list of albums as an HTML page" do
-  #     response = get('/albums')
-
-  #     expect(response.status).to eq(200)
-  #     expect(response.body).to include('<div> Title: Surfer Rosa Released: 1988 </div>')
-  #     expect(response.body).to include('<div> Title: Ring Ring Released: 1973 </div>')
-  #   end
-  # end
-
   context "GET /albums" do
     it "returns a list of albums as an HTML page" do
       response = get('/albums')
@@ -104,8 +94,8 @@ describe Application do
       response = get('/artists')
 
       expect(response.status).to eq(200)
-      expect(response.body).to include('<a href="/artists/Pixies">Rock</a><br />')
-      expect(response.body).to include('<a href="/artists/ABBA">Pop</a><br />')
+      expect(response.body).to include('<a href="/artists/1">Pixies</a><br />')
+      expect(response.body).to include('<a href="/artists/2">ABBA</a><br />')
     end
   end
 end
