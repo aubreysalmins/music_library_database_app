@@ -36,16 +36,8 @@ describe Application do
     end
   end
 
-  context "GET /artists" do
-    xit 'should return a list of artists' do
-
-      response = get('/artists')
-      expect(response.body).to eq('Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos')
-    end
-  end
-
   context "POST /artists" do
-    xit "creates a new artist" do
+    it "creates a new artist" do
 
       response = post('/artists',name:'Wild nothing',genre:'Indie')
       repo = ArtistRepository.new
@@ -55,7 +47,7 @@ describe Application do
       expect(response.body).to eq('')
 
       response = get('/artists')
-      expect(response.body).to eq('Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos, Wild nothing')
+      expect(response.body).to include('<a href="/artists/6">Wild nothing</a><br />')
     end
   end
 
