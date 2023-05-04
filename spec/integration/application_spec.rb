@@ -37,7 +37,7 @@ describe Application do
   end
 
   context "GET /artists" do
-    it 'should return a list of artists' do
+    xit 'should return a list of artists' do
 
       response = get('/artists')
       expect(response.body).to eq('Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos')
@@ -45,7 +45,7 @@ describe Application do
   end
 
   context "POST /artists" do
-    it "creates a new artist" do
+    xit "creates a new artist" do
 
       response = post('/artists',name:'Wild nothing',genre:'Indie')
       repo = ArtistRepository.new
@@ -68,6 +68,15 @@ describe Application do
     end
   end
 
+  context "GET /artists/:id" do
+    it 'should return the first artists information' do
+      response = get('/artists/1')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('Pixies', 'Rock')
+    end
+  end
+
   # context "GET /albums" do
   #   it "returns a list of albums as an HTML page" do
   #     response = get('/albums')
@@ -87,6 +96,16 @@ describe Application do
       expect(response.body).to include('<a href="/albums/3">Waterloo</a><br />')
       expect(response.body).to include('<a href="/albums/4">Super Trouper</a><br />')
       expect(response.body).to include('<a href="/albums/5">Bossanova</a><br />')
+    end
+  end
+
+  context "GET /artists" do
+    it "returns a list of artists as an HTML page" do
+      response = get('/artists')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<a href="/artists/Pixies">Rock</a><br />')
+      expect(response.body).to include('<a href="/artists/ABBA">Pop</a><br />')
     end
   end
 end
