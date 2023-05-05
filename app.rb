@@ -13,7 +13,11 @@ class Application < Sinatra::Base
     also_reload 'lib/album_repository'
     also_reload 'lib/artist_repository'
   end
-
+  
+  get 'artists/new' do
+    return erb(:new_artist)
+  end
+  
   get '/albums' do
     repo = AlbumRepository.new
     @albums = repo.all
@@ -59,6 +63,7 @@ class Application < Sinatra::Base
 
     return ''
   end
+  
 
   get '/albums/new' do
     return erb(:new_album)
@@ -77,6 +82,7 @@ class Application < Sinatra::Base
     
     return erb(:index)
   end
+
 
   get '/artists/:id' do
     @id = params[:id]
